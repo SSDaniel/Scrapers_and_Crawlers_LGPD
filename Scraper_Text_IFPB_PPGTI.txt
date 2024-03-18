@@ -1,0 +1,34 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+# URL da página dos docentes
+url = 'https://www.ifpb.edu.br/ppgti/programa/corpo-docente'
+
+# Faz a requisição para a página
+response = requests.get(url)
+
+# Parseia o HTML da página
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# Lista para armazenar os dados dos docentes
+dados_docentes = []
+
+# Encontra todos os elementos que representam os docentes
+# (Você precisará ajustar este seletor CSS para corresponder à estrutura da página)
+docentes = soup.find_all('div', class_='docente')
+
+for docente in docentes:
+    nome = docente.find('h4').text.strip()  # Ajuste o seletor conforme necessário
+    linha_pesquisa = docente.find('p', class_='linha-pesquisa').text.strip()  # Ajuste o seletor
+    lattes = docente.find('a')['href']  # Ajuste o seletor
+    email = docente.find('p', class_='email').text.strip()  # Ajuste o seletor
+    
+    # Adiciona os dados do docente na lista
+    dados_docentes.append([nome, linha_pesquisa, lattes, email])
+
+# Cria um DataFrame com os dados dos docentes
+df_docentes = pd.DataFrame(dados_docentes, columns=['Nome', 'Linha de Pesquisa', 'URL do Lattes', 'E-mail'])
+
+# Exibe o DataFrame
+print(df_docentes)
