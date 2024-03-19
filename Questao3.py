@@ -1,30 +1,31 @@
 from bs4 import BeautifulSoup
 import pandas as pd
+import requests
 
 #iMPLEMENTAÇÃO NO HTML LOCAL
 # Definindo o caminho para o arquivo HTML que contém as informações que desejamos extrair.
-caminho_arquivo = 'ifpb.html'
+#caminho_arquivo = 'ifpb.html'
 
 # Abrindo e lendo o conteúdo do arquivo HTML especificado.
-with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
-    conteudo_html = arquivo.read()
+#with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
+#    conteudo_html = arquivo.read()
 
 #IMPLEMENTAÇÃO NA PÁGINA WEB---------------------------------------
 ## URL da página dos docentes
-#url = 'https://www.ifpb.edu.br/ppgti/programa/corpo-docente'
+url = 'https://www.ifpb.edu.br/ppgti/programa/corpo-docente'
 
 # Faz a requisição para a página
-#response = requests.get(url)
+response = requests.get(url)
 
 # Verifica se a requisição foi bem sucedida
-#if response.status_code == 200:
+if response.status_code == 200:
     # Parseia o HTML da página
-#    soup = BeautifulSoup(response.text, 'html.parser')
+    sopa = BeautifulSoup(response.text, 'html.parser')
 #------------------------------------------------------------------
 
     
 # Utilizando a biblioteca BeautifulSoup para interpretar (parsear) o conteúdo HTML lido do arquivo.
-sopa = BeautifulSoup(conteudo_html, 'html.parser')
+#sopa = BeautifulSoup(conteudo_html, 'html.parser')
 
 # Preparando uma lista vazia para armazenar os dados corrigidos dos docentes.
 dados_docentes_final = []
